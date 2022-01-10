@@ -1,0 +1,19 @@
+# PyCharm
+.idea/
+.run/
+
+# Python
+*.pyc
+
+# Databases
+*.sqlite
+*.sqlite3
+*.db
+.vscode/
+# Virtual Env
+venv/
+.python-version
+*.rdb
+
+# System
+*.DS_Store

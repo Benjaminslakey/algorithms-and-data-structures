@@ -1,6 +1,6 @@
 import random
 from collections import (namedtuple, deque)
-from typing import List, Optional, NoReturn, Tuple, Any, Iterable
+from typing import List, Optional, NoReturn, Tuple, Any, Iterable, Protocol
 
 import pytest
 
@@ -11,17 +11,33 @@ RIGHT_LEFT = 3
 LEFT_RIGHT = 4
 
 
+class AVLData(Protocol):
+    def __eq__(self, other) -> bool:
+        ...
+
+    def __lt__(self, other) -> bool:
+        ...
+
+    def __gt__(self, other) -> bool:
+        ...
+
+
 class AVLNode(object):
-    def __init__(self, val: Any, left=None, right=None):
-        self.val: Any = val  # update Any types to a type that requires operators: >, <, ==
+    def __init__(self, val: Optional[AVLData], left=None, right=None):
+        self.val: Optional[AVLData] = val  # update Any types to a type that requires operators: >, <, ==
         self.count: int = 1  # store duplicate values in same node
-        self.left: AVLNode = left
-        self.right: AVLNode = right
+        self.left: Optional[AVLNode] = left
+        self.right: Optional[AVLNode] = right
         self.height: int = 1
 
     def __repr__(self) -> str:
         # could be useful for repr to show tree rooted at this node instead of just the node value
         return f"({self.val})"
+
+    def __eq__(self, other):
+        if not isinstance(other, AVLNode):
+            raise TypeError(f"Cannot compare AVLNode instance with {other}")
+        return self.val == other.val
 
     def update_height(self) -> NoReturn:
         self.height = max(self.left_height, self.right_height) + 1
@@ -44,18 +60,18 @@ class AVLNode(object):
 
 
 class AVLTree:
-    def __init__(self, initial: Optional[Iterable[Any]] = None):
+    def __init__(self, initial: Optional[Iterable[AVLData]] = None):
         self.root = None
 
         if initial is not None:
             self._build_tree(initial)
 
-    def _build_tree(self, tree_vals: Iterable[Any]) -> NoReturn:
+    def _build_tree(self, tree_vals: Iterable[AVLData]) -> NoReturn:
         for val in tree_vals:
             self.insert(val)
 
     @staticmethod
-    def inorder(root: AVLNode) -> List[AVLNode]:
+    def inorder(root: AVLNode) -> List[AVLData]:
         if root is None:
             return []
         left = AVLTree.inorder(root.left)
@@ -119,7 +135,7 @@ class AVLTree:
         print(f"\n{output}")
 
     @staticmethod
-    def level_order(root: AVLNode) -> Iterable[Iterable[Any]]:
+    def level_order(root: AVLNode) -> Iterable[Iterable[AVLData]]:
         q = deque([root])
         traversal = []
         while q:
@@ -141,8 +157,8 @@ class AVLTree:
                 break
         return traversal
 
-    def insert(self, val: Any) -> NoReturn:
-        def _insert_helper(root: AVLNode, insert_value: Any) -> AVLNode:
+    def insert(self, val: AVLData) -> NoReturn:
+        def _insert_helper(root: AVLNode, insert_value: AVLData) -> AVLNode:
             # base case, do insert
             if root is None:
                 return AVLNode(insert_value)
@@ -158,7 +174,7 @@ class AVLTree:
             return AVLTree._re_balance(root)
         self.root = _insert_helper(self.root, val)
 
-    def delete(self, val: Any) -> NoReturn:
+    def delete(self, val: AVLData) -> NoReturn:
         """
         the complicated part of deleting from a BST involves the case where the node to be deleted has two children
         if the tree is so large that we need to do this iteratively then the logic for deleting that node becomes very
@@ -168,7 +184,7 @@ class AVLTree:
         target's right child (or right child itself). we then recursively call delete on the subtree with the duplicated
         value as our target
         """
-        def _delete_helper(root: AVLNode, delete_value: Any) -> NoReturn:
+        def _delete_helper(root: AVLNode, delete_value: AVLData) -> NoReturn:
             if root is None:  # value to delete did not exist in tree
                 return
 
@@ -200,7 +216,7 @@ class AVLTree:
             return new_root
         self.root = _delete_helper(self.root, val)
 
-    def search(self, val: Any) -> Optional[AVLNode]:
+    def search(self, val: AVLData) -> Optional[AVLNode]:
         node = self.root
         while node:
             if val < node.val:
@@ -270,7 +286,7 @@ class AVLTree:
         d.update_height()
         return d
 
-    def successor(self, value) -> Optional[AVLNode]:
+    def successor(self, value: AVLData) -> Optional[AVLNode]:
         successor, parent, grandparent = None, None, None
         node = self.root
         while node:
@@ -291,11 +307,9 @@ class AVLTree:
                 successor = parent
             else:  # leaf on right side of parent, successor is grandparent
                 successor = grandparent
-        else:
-            successor = parent
         return successor
 
-    def predecessor(self, value) -> Optional[AVLNode]:
+    def predecessor(self, value: AVLData) -> Optional[AVLNode]:
         predecessor, parent = None, None
         node = self.root
         while node:
@@ -310,7 +324,7 @@ class AVLTree:
             predecessor = node.left
             while predecessor.left:
                 predecessor = predecessor.left
-        elif node.val > parent.val:
+        elif parent and node.val > parent.val:
             predecessor = parent
         return predecessor
 
@@ -358,9 +372,41 @@ def test_avl_insert(initial_tree, to_insert, expected_inorder):
     assert is_balanced
 
 
-def test_avl_successor():
-    pass
+@pytest.mark.parametrize('initial_tree, val, expected_successor', [
+    pytest.param([11, 20, 29, 26, 65, 50, 23, 55], 11, 20),
+    pytest.param([11, 20, 29, 26, 65, 50, 23, 55], 55, 65),
+    pytest.param([11, 20, 29, 26, 65, 50, 23, 55], 11, 20),
+    pytest.param([11, 20, 29, 26, 65, 50, 23, 55], 55, 65),
+    pytest.param([11, 20, 29, 26, 65, 50, 23, 55], 65, None),
+    pytest.param([11, 20, 29, 26, 50, 23], 50, None),
+    pytest.param([11], 11, None),
+])
+def test_avl_successor(initial_tree, val, expected_successor):
+    avl = AVLTree(initial_tree)
+    successor = avl.successor(val)
+    assert successor is None and successor == expected_successor or successor.val == expected_successor
 
 
-def test_avl_predecessor():
-    pass
+@pytest.mark.parametrize('initial_tree, val, expected_predecessor', [
+    pytest.param([11, 20, 29, 26, 65, 50, 23, 55], 11, None),
+    pytest.param([11, 20, 29, 26, 65, 50, 23, 55], 55, 50),
+    pytest.param([11, 20, 29, 26, 65, 50, 23, 55], 20, 11),
+    pytest.param([11, 20, 29, 26, 65, 50, 23, 55], 65, 55),
+    pytest.param([20, 29, 26, 65, 50, 23, 55], 20, None),
+    pytest.param([11], 11, None),
+])
+def test_avl_predecessor(initial_tree, val, expected_predecessor):
+    avl = AVLTree(initial_tree)
+    predecessor = avl.predecessor(val)
+    assert predecessor is None and predecessor == expected_predecessor or predecessor.val == expected_predecessor
+
+
+def test_avl_node_counter():
+    delete_val = 999999
+    avl = AVLTree([1, delete_val])
+    avl.delete(delete_val)
+    assert avl.search(delete_val) is None
+    avl.insert(38192)
+    avl.delete(1)
+    avl.insert(delete_val)
+    assert avl.search(delete_val).count == 1

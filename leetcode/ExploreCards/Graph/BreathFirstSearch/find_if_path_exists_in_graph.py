@@ -1,5 +1,3 @@
-# depth first search, if we've visited all nodes, no path can be found
-
 from collections import deque, defaultdict
 from typing import List
 
@@ -14,6 +12,7 @@ def parse_graph(edge_list):
 
 class Solution:
     def validPath(self, n: int, edges: List[List[int]], start: int, end: int) -> bool:
+        """ breadth first search, if we've visited all nodes, no path can be found """
         visited_locations = set()
         neighbors_for_nodes = parse_graph(edges)
         explore_from = deque([start])
@@ -29,3 +28,5 @@ class Solution:
             if current_location == end:
                 return True
         return False
+
+# @todo add unit tests

@@ -1,9 +1,8 @@
-from typing import List, Optional, NoReturn, Tuple, Any
+from typing import List
 
 import pytest
-from sortedcontainers import SortedList
 
-from data_structures.avl_tree import AVLTree
+from data_structures.trees.avl_tree import AVLTree
 
 
 def create_avl(nums: List[int], start: int, end: int) -> AVLTree:
@@ -16,7 +15,9 @@ def create_avl(nums: List[int], start: int, end: int) -> AVLTree:
 
 
 class Solution:
-    def containsNearbyAlmostDuplicate__using_avl_tle(self, nums: List[int], k: int, t: int) -> bool:
+    # @todo speed up AVL tree operations with python optimizations, current implementation results in TLE on leetcode
+    # although implementation has same time complexity as my accepted solution using sortedcontainers library
+    def containsNearbyAlmostDuplicate(self, nums: List[int], k: int, t: int) -> bool:
         if k == 0 or len(nums) <= 1:
             return False
         left = 0
@@ -48,45 +49,6 @@ class Solution:
             window_avl.delete(nums[left])
             left += 1
             right += 1
-        return False
-
-    def containsNearbyAlmostDuplicate(self, nums: List[int], k: int, t: int) -> bool:
-        if k == 0 or len(nums) <= 1:
-            return False
-        left = 0
-        right = k
-        # use self balancing BST for logN: search, insert, deletion
-        # to make sorted sliding window operations quick
-        window_avl = SortedList([nums[idx] for idx in range(0, min(len(nums), k + 1))])
-        while left < len(nums):
-            # just to skip the first insert which would duplicate initial right
-            if k < right < len(nums):
-                window_avl.add(nums[right])
-            idx = left
-            while idx <= right and idx < len(nums):
-                curr = window_avl.index(nums[idx])
-                val = nums[idx]
-                try:
-                    successor = window_avl[curr + 1]
-                    if abs(val - successor) <= t:
-                        return True
-                except IndexError:
-                    successor = None
-                try:
-                    predecessor = window_avl[curr - 1]
-                    if abs(val - predecessor) <= t:
-                        return True
-                except IndexError:
-                    predecessor = None
-
-                if window_avl.count(val) > 1:
-                    return True
-                idx += 1
-            window_avl.remove(nums[left])
-            left += 1
-            right += 1
-            if right >= len(nums):
-                break
         return False
 
 

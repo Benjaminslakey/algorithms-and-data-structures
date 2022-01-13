@@ -9,12 +9,23 @@ def print_matrix(matrix):
 
 class Solution:
     def generateMatrix(self, n: int) -> List[List[int]]:
+        # @todo could make this code cleaner with a direction + boundary abstraction
+        # three loops:
+        #   continue building matrix
+        #       iterate though each direction
+        #           build in a given direction until hitting a boundary
+        # while matrix_incomplete:
+        #   for direction, boundary in directions:
+        #       while boundary_not_reached(direction, location, boundary):
+        #           build_in_direction(direction, location)
+        #       update_boundary(boundary)
+
         left, right, top, bottom = -1, n, -1, n
         row, column = 0, 0
         num = 1
         matrix = [[-1 for _ in range(0, n)] for _ in range(0, n)]
-        # go right
         while num <= n ** 2:
+            # go right
             while num <= n ** 2 and column < right:
                 matrix[row][column] = num
                 num += 1
@@ -59,3 +70,5 @@ class Solution:
                     row -= 1
             print_matrix(matrix)
         return matrix
+
+#  @todo add unit tests

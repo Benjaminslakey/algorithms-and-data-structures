@@ -1,16 +1,3 @@
-# if disjoint sets or no rotten oranges
-#     return -1
-
-# find all starting rotten oranges
-# while fresh orange set is not empty
-#     for each fresh orange
-#       check for rotten neighbors
-#       if has rotten neighbors
-#            add to changed set
-#     remove changed oranges from fresh set
-#     add changed torotten set
-#     if fresh set of oranges is empty
-#         return minutes
 from typing import List
 
 FRESH = 1
@@ -74,28 +61,45 @@ def parse_oranges(grid):
 
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
+        """
+        if disjoint sets or no rotten oranges
+            return -1
+
+        use changed set to record which fresh oranges become rotten this minute
+
+        find all starting rotten oranges
+        while fresh orange set is not empty
+            for each fresh orange
+                check for rotten neighbors
+                if has rotten neighbors, then this will turn rotten
+                    add to changed set
+            remove changed oranges from fresh set
+            add changed to rotten set
+            if fresh set of oranges is empty, game is over
+                return minutes
+        """
         fresh_oranges, rotten_oranges, disjoint_orange = parse_oranges(grid)
         if disjoint_orange or (not rotten_oranges and fresh_oranges):
             return -1
         minutes = 0
-        changed = set()
         while fresh_oranges:
             minutes += 1
-            num_rotten_neighbors = 0
+            rotted_this_minute = set()
             # determine what rotted by recording all fresh oranges with a rotten neighbor
             for orange in fresh_oranges:
                 for nearby in orange.neighbors:
                     if nearby is not None and nearby.state == ROTTEN:
-                        num_rotten_neighbors += 1
-                        changed.add(orange)
-                        break
+                        rotted_this_minute.add(orange)
+                        break  # if we know this will turn rotten, no need to check any more neighbors
             # if no oranges rotted in this minute, any remaining fresh oranges are unreachable and we cannot continue
-            if num_rotten_neighbors == 0:
+            if not rotted_this_minute:
                 return -1
-            for orange in changed:
+            # modify oranges  after exploring all currently fresh, otherwise rot will grow outward fast than 1 dist
+            # per minute
+            for orange in rotted_this_minute:
                 orange.state = ROTTEN
-            # print(f"minute: {minutes}, \nfresh: {fresh_oranges}, \nrotten: {rotten_oranges}, \nchanged: {changed}\n\n")
-            fresh_oranges = fresh_oranges - changed
-            rotten_oranges |= changed
+            fresh_oranges -= rotted_this_minute  # set diff
+            rotten_oranges |= rotted_this_minute  # set union
         return minutes
 
+# @todo add unit tests

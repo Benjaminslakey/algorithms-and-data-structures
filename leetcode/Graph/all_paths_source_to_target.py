@@ -22,3 +22,5 @@ class Solution:
                 if neighbor == dest:
                     paths.append(path_to_neighbor)
         return paths
+
+# @todo add unit tests

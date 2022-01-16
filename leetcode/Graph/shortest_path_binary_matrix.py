@@ -73,6 +73,4 @@ class Solution:
             visited.add(current_location)
         return -1
 
-
-
-
+# @todo add unit tests

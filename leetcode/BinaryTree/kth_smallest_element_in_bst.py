@@ -5,11 +5,11 @@ import pytest
 from collections import deque
 from typing import Optional
 
-from data_structures.trees.binary_tree import TreeNode
+from data_structures.trees.binary_tree import BinaryTreeNode
 
 
 class Solution:
-    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+    def kthSmallest(self, root: Optional[BinaryTreeNode], k: int) -> int:
         stack = deque([])
         kth = 0
         node = root

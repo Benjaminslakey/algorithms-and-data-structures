@@ -1,19 +1,22 @@
 # @tags: [binary_tree, queue, stack, breadth_first_search]
+from collections import deque
+from typing import (Optional, List)
 
 import pytest
 
-from collections import deque
 
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
+from algorithms.trees.binary_tree.deserialize_tree import deserialize_leetcode_tree
+from data_structures.trees.binary_tree import BinaryTreeNode
 
 
 class Solution:
-    def zigzagLevelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+    @staticmethod
+    def zig_zag_level(level_num, level):
+        if level_num % 2 == 0:
+            return [level[idx].val for idx in range(0, len(level))]
+        return [level[idx].val for idx in range(len(level) - 1, -1, -1)]
+
+    def zigzagLevelOrder(self, root: Optional[BinaryTreeNode]) -> List[List[int]]:
         if root is None:
             return []
 
@@ -25,29 +28,22 @@ class Solution:
             node = queue.pop()
             if node is None and len(queue):
                 level_num += 1
-                zig_zag = []
-                while level:
-                    if level_num % 2 == 0:
-                        n = level.pop()
-                    else:
-                        n = level.popleft()
-                    zig_zag.append(n.val)
-                levels.append(zig_zag)
-                level = deque([])
+                levels.append(self.zig_zag_level(level_num, level))
+                level = []
                 queue.appendleft(None)
             if node and node.left:
                 queue.appendleft(node.left)
-                level.appendleft(node.left)
+                level.append(node.left)
             if node and node.right:
                 queue.appendleft(node.right)
-                level.appendleft(node.right)
+                level.append(node.right)
         return levels
 
 
 @pytest.mark.parametrize('input_tree, expected_level_order', [
     pytest.param([], []),
-    pytest.param([1], [1]),
-    pytest.param([3,9,20,None,None,15,7], [[3],[20,9],[15,7]]),
+    pytest.param([1], [[1]]),
+    pytest.param([3, 9, 20, None, None, 15, 7], [[3], [20, 9], [15, 7]]),
 ])
 def test_zig_zag_level_order(input_tree, expected_level_order):
     root = deserialize_leetcode_tree(input_tree)

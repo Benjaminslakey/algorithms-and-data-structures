@@ -1,5 +1,6 @@
-from collections import (deque)
-from typing import (List, Optional, NoReturn, Tuple, Iterable, Protocol)
+from typing import (Optional, NoReturn, Iterable, Protocol)
+
+from data_structures.trees.binary_tree import BinaryTreeNode
 
 BALANCED = 0
 RIGHT_RIGHT = 1
@@ -19,8 +20,9 @@ class AVLData(Protocol):
         ...
 
 
-class AVLNode(object):
+class AVLNode(BinaryTreeNode):
     def __init__(self, val: Optional[AVLData], left=None, right=None):
+        super().__init__(val, left, right)
         self.val: Optional[AVLData] = val  # update Any types to a type that requires operators: >, <, ==
         self.count: int = 1  # store duplicate values in same node
         self.left: Optional[AVLNode] = left
@@ -66,94 +68,6 @@ class AVLTree:
     def _build_tree(self, tree_vals: Iterable[AVLData]) -> NoReturn:
         for val in tree_vals:
             self.insert(val)
-
-    @staticmethod
-    def inorder(root: AVLNode) -> List[AVLData]:
-        if root is None:
-            return []
-        left = AVLTree.inorder(root.left)
-        right = AVLTree.inorder(root.right)
-        return left + [root.val] * root.count + right
-
-    @staticmethod
-    def is_balanced(root: AVLNode) -> Tuple[int, bool]:
-        if root is None:
-            return 0, True
-        left_height, left_balanced = AVLTree.is_balanced(root.left)
-        right_height, right_balanced = AVLTree.is_balanced(root.right)
-        return (
-            max(left_height, right_height) + 1,
-            abs(right_height - left_height) < 2 and left_balanced and right_balanced
-        )
-
-    @staticmethod
-    def print_tree(root: AVLNode) -> NoReturn:
-        """
-        inorder: [11, 20, 23, 26, 29, 50, 65]
-        outputs ->
-                          ----------------- 29  -----------------
-                         /                                       \
-                ------- 20  -------                     ------- 55  -------
-               /                   \                   /                   \
-           -- 11  --           -- 26  --           -- 50  --           -- 65  --
-          /         \         /         \         /         \         /         \
-        None      None       23       None      None      None      None      None
-        """
-
-        def format_node(data):
-            node_len = len(str(data))
-            # start with 0.01 base so that .5 will round up to 1 instead of to 0
-            return f"{' ' * ((max_node_size - node_len) // 2)}{data}{' ' * round(0.01 + (max_node_size - node_len) / 2)}"
-
-        max_node_size = 5
-        traversal = AVLTree.level_order(root)
-        tree_height = len(traversal)
-        output = ""
-        for level_depth, level_nodes in enumerate(traversal):
-            level_height = tree_height - level_depth
-            level_indent = max_node_size * (2 ** (level_height - 1)) - 1  # size of left subtree
-            gap_between_nodes = max_node_size * ((2 ** level_height) - 1)  # size of parent left subtree
-            node_strings = [format_node(node) for node in level_nodes]
-            if level_height > 1:  # should have children
-                link_length = (level_indent // 2) - 2
-                between_nodes = f"{'-' * link_length}{' ' * (gap_between_nodes - link_length * 2)}{'-' * link_length}"
-            else:
-                link_length = 0
-                between_nodes = ' ' * gap_between_nodes
-            level_repr = between_nodes.join(node_strings)
-            outter_link = f"{' ' * (level_indent - link_length)}{'-' * link_length}"
-            parent_links = ""
-            for idx, _ in enumerate(level_nodes):
-                link_type = "/" if idx % 2 == 0 else "\\"
-                parent_links += f"{format_node(link_type)}{' ' * gap_between_nodes}"
-            if level_depth > 0:
-                output += f"{' ' * level_indent}{parent_links}\n"
-            output += f"{outter_link}{level_repr}{outter_link[::-1]}\n"
-        print(f"\n{output}")
-
-    @staticmethod
-    def level_order(root: AVLNode) -> Iterable[Iterable[AVLData]]:
-        """ include nulls in level order and add fake children for null nodes to make printing easier for now """
-        q = deque([root])
-        traversal = []
-        while q:
-            level = []
-            next_lvl = deque()
-            while q:
-                node = q.pop()
-                if node:
-                    next_lvl.appendleft(node.left)
-                    next_lvl.appendleft(node.right)
-                    level.append(node.val)
-                else:
-                    for i in range(0, 2):
-                        next_lvl.appendleft(None)
-                    level.append(None)
-            q = next_lvl
-            traversal.append(level)
-            if all(map(lambda x: x is None, next_lvl)):
-                break
-        return traversal
 
     def insert(self, val: AVLData) -> NoReturn:
         def _insert_helper(root: AVLNode, insert_value: AVLData) -> AVLNode:

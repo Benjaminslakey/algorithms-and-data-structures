@@ -1,14 +1,8 @@
 import pytest
 
+from algorithms.trees.binary_tree.traversals import inorder_traversal
+from algorithms.trees.binary_tree.validate import is_balanced
 from data_structures.trees.avl_tree import AVLTree
-
-
-@pytest.mark.parametrize('initial_tree', [
-    pytest.param([11, 20, 29, 26, 65, 50, 23, 55])
-])
-def test_avl_print_tree(initial_tree):
-    avl = AVLTree(initial_tree)
-    AVLTree.print_tree(avl.root)
 
 
 @pytest.mark.parametrize('initial_tree, to_delete, expected_inorder', [
@@ -21,10 +15,9 @@ def test_avl_print_tree(initial_tree):
 def test_avl_delete(initial_tree, to_delete, expected_inorder):
     avl = AVLTree(initial_tree)
     avl.delete(to_delete)
-    assert AVLTree.inorder(avl.root) == expected_inorder
-    AVLTree.print_tree(avl.root)
-    _, is_balanced = AVLTree.is_balanced(avl.root)
-    assert is_balanced
+    assert inorder_traversal(avl.root) == expected_inorder
+    balanced = is_balanced(avl.root)
+    assert balanced
 
 
 @pytest.mark.parametrize('initial_tree, to_insert, expected_inorder', [
@@ -41,9 +34,9 @@ def test_avl_delete(initial_tree, to_delete, expected_inorder):
 def test_avl_insert(initial_tree, to_insert, expected_inorder):
     avl = AVLTree(initial_tree)
     avl.insert(to_insert)
-    assert AVLTree.inorder(avl.root) == expected_inorder
-    _, is_balanced = AVLTree.is_balanced(avl.root)
-    assert is_balanced
+    assert inorder_traversal(avl.root) == expected_inorder
+    balanced = is_balanced(avl.root)
+    assert balanced
 
 
 @pytest.mark.parametrize('initial_tree, val, expected_successor', [

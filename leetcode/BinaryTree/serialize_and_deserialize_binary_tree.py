@@ -3,14 +3,14 @@
 from collections import deque
 import json
 
-from data_structures.trees.binary_tree import TreeNode
+from data_structures.trees.binary_tree import BinaryTreeNode
 
 
 class Codec:
     def serialize(self, root):
         """Encodes a tree to a single string.
 
-        :type root: TreeNode
+        :type root: BinaryTreeNode
         :rtype: str
         """
 
@@ -35,7 +35,7 @@ class Codec:
         """Decodes your encoded data to tree.
 
         :type data: str
-        :rtype: TreeNode
+        :rtype: BinaryTreeNode
         """
 
         tree_arr = json.loads(data)
@@ -43,7 +43,7 @@ class Codec:
         def get_node():
             if tree_arr:
                 val = tree_arr.pop(0)
-                return TreeNode(val)
+                return BinaryTreeNode(val)
             return None
 
         root = get_node()

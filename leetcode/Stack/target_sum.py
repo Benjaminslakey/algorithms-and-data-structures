@@ -9,6 +9,7 @@ import pytest
 class Solution:
     def __init__(self):
         self.paths = 0
+        self.unique_paths = set()
 
     def traverse(self, nums, signs, target):
         if len(signs) == len(nums):
@@ -29,15 +30,16 @@ class Solution:
 
         num_ways = 0
         stack = deque([])
-        signs = []
-        while stack or len(signs) < len(nums):
+        signs = tuple()
+        while stack or len(signs) <= len(nums):
             while len(signs) <= len(nums):
                 stack.append(signs)
-                signs = signs + [1]
+                signs = signs + (1,)
             signs = stack.pop()
-            if sum([n * signs[idx] for idx, n in enumerate(nums)]) == target:
+            if len(signs) == len(nums) and signs not in self.unique_paths and sum([n * signs[idx] for idx, n in enumerate(nums)]) == target:
                 num_ways += 1
-            signs = signs + [-1]
+                self.unique_paths.add(signs)
+            signs = signs + (-1,)
         return num_ways
 
 
@@ -46,6 +48,7 @@ class Solution:
     pytest.param([1], 1, 1),
     pytest.param([1], 2, 0),
     pytest.param([1000], -1000, 1),
+    pytest.param([42,24,30,14,38,27,12,29,43,42,5,18,0,1,12,44,45,50,21,47], 38, 5602)
 ])
 def test_target_sum(nums, target, expected):
     solver = Solution()

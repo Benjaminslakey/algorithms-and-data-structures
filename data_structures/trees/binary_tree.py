@@ -7,3 +7,6 @@ class BinaryTreeNode:
         self.left = left
         self.right = right
         self.count = 0
+
+    def __repr__(self):
+        return f"{self.val}"

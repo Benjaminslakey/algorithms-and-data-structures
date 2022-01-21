@@ -46,9 +46,16 @@ def print_tree(root: BinaryTreeNode) -> NoReturn:
         # start with 0.01 base so that .5 will round up to 1 instead of to 0
         return f"{' ' * ((max_node_size - node_len) // 2)}{data}{' ' * round(0.01 + (max_node_size - node_len) / 2)}"
 
-    max_node_size = 5
+    def get_max_node_size(lvl_order):
+        max_node = ''
+        for lvl in lvl_order:
+            lvl_max = max(lvl, key=lambda x: len(str(x)))
+            max_node = max(max_node, lvl_max, key=lambda x: len(str(x)))
+        return len(max_node)
+
     traversal = _level_order(root)
     tree_height = len(traversal)
+    max_node_size = get_max_node_size(traversal) + 2
     output = ""
     for level_depth, level_nodes in enumerate(traversal):
         level_height = tree_height - level_depth
@@ -56,7 +63,7 @@ def print_tree(root: BinaryTreeNode) -> NoReturn:
         gap_between_nodes = max_node_size * ((2 ** level_height) - 1)  # size of parent left subtree
         node_strings = [format_node(node) for node in level_nodes]
         if level_height > 1:  # should have children
-            link_length = (level_indent // 2) - 2
+            link_length = (level_indent // 2) - 3
             between_nodes = f"{'-' * link_length}{' ' * (gap_between_nodes - link_length * 2)}{'-' * link_length}"
         else:
             link_length = 0

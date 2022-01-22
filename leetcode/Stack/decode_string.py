@@ -1,3 +1,5 @@
+# @tags: [stack, string]
+
 from collections import deque
 
 import pytest
@@ -46,10 +48,11 @@ class Solution:
         return decoded
 
     @staticmethod
-    def decode_string__iterative(s: str, idx: int) -> str:
+    def decode_string__iterative(s: str) -> str:
         stack = deque([])
         decoded = ""
         partial = ""
+        idx = 0
         while idx < len(s):
             char = s[idx]
             if char.isalpha():
@@ -63,25 +66,27 @@ class Solution:
                     num_str += s[idx]
                     idx += 1
                 num = int(num_str)
-                num_str = ""
                 stack.append((num, partial))
+                partial = ""
             elif char == ']':
                 multiplier, parent = stack.pop()
-                parent += partial * multiplier 
+                parent += partial * multiplier
+                if not stack:
+                    decoded += parent
+                    partial = ""
+                else:
+                    partial = parent
             idx += 1
-
-
-    def decodeString(self, s: str) -> str:
-        pass
+        return decoded
 
 
 decode_string_test_cases = [
+    pytest.param("3[a2[c]]", "accaccacc"),
+    pytest.param("3[a2[c2[b]]]", "acbbcbbacbbcbbacbbcbb"),
     pytest.param("3[a]2[bc]", "aaabcbc"),
     pytest.param("13[a]2[bc]", "aaaaaaaaaaaaabcbc"),
     pytest.param("2[abc]3[de]fg", "abcabcdededefg"),
-    pytest.param("3[a2[c]]", "accaccacc"),
     pytest.param("2[abc]3[cd]ef", "abcabccdcdcdef"),
-    pytest.param("3[a2[c2[b]]]", "acbbcbbacbbcbbacbbcbb"),
 ]
 
 

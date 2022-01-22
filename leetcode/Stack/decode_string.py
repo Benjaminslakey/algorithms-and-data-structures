@@ -21,65 +21,79 @@ class IndexPointer:
 
     def increment(self):
         self.i += 1
+        return self
 
 
 class Solution:
-    def decodeString__recursive(self, s):
-        def helper(s, idx):
-            if not s:
-                return ""
-
-            decoded_string = ""
-            nested_multiplier = 1
-            while idx < len(s):
-                char = s[idx]
-                if char.isnumeric():
-                    num_str = ""
-                    while s[idx].isnumeric():
-                        num_str += s[idx]
-                        idx.increment()
-                    nested_multiplier = int(num_str)
-                elif char == "[":
-                    idx.increment()
-                    decoded_string += nested_multiplier * helper(s, idx)
-                    nested_multiplier = 1
-                elif char == "]":
-                    idx.increment()
-                    return decoded_string
-                else:
-                    decoded_string += char
-                    idx.increment()
-            return decoded_string
-        return helper(s, IndexPointer())
-
-    def decodeString__iterative(self, s: str) -> str:
-        decoded_string = ""
-        stack = deque([])
-        i = 0
-        while i < len(s):
-            char = s[i]
+    @staticmethod
+    def decode_string__recursive(s: str, idx: IndexPointer) -> str:
+        decoded = ""
+        num_str = ""
+        while idx < len(s):
+            char = s[idx]
             if char.isalpha():
-                decoded_string += char
-            elif char.isnumeric():
+                decoded += char
+            if char == ']':
+                break
+            elif char.isdigit():
+                while s[idx].isdigit():
+                    num_str += s[idx]
+                    idx.increment()
+                nested = Solution.decode_string__recursive(s, idx.increment())
+                decoded += nested * int(num_str)
                 num_str = ""
-                while s[i].isnumeric():
-                    num_str += s[i]
-                    i += 1
-                count = int(num_str)
-            i += 1
+            idx.increment()
+        return decoded
 
-        return decoded_string
+    @staticmethod
+    def decode_string__iterative(s: str, idx: int) -> str:
+        stack = deque([])
+        decoded = ""
+        partial = ""
+        while idx < len(s):
+            char = s[idx]
+            if char.isalpha():
+                if not stack:
+                    decoded += char
+                else:
+                    partial += char
+            elif char.isdigit():
+                num_str = ""
+                while s[idx].isdigit():
+                    num_str += s[idx]
+                    idx += 1
+                num = int(num_str)
+                num_str = ""
+                stack.append((num, partial))
+            elif char == ']':
+                multiplier, parent = stack.pop()
+                parent += partial * multiplier 
+            idx += 1
 
 
-@pytest.mark.parametrize('encoded_sting, decoded_string', [
+    def decodeString(self, s: str) -> str:
+        pass
+
+
+decode_string_test_cases = [
     pytest.param("3[a]2[bc]", "aaabcbc"),
     pytest.param("13[a]2[bc]", "aaaaaaaaaaaaabcbc"),
     pytest.param("2[abc]3[de]fg", "abcabcdededefg"),
     pytest.param("3[a2[c]]", "accaccacc"),
     pytest.param("2[abc]3[cd]ef", "abcabccdcdcdef"),
     pytest.param("3[a2[c2[b]]]", "acbbcbbacbbcbbacbbcbb"),
-])
-def test_decode_string(encoded_sting, decoded_string):
+]
+
+
+@pytest.mark.parametrize('encoded_string, expected_decoded_string', decode_string_test_cases)
+def test_decode_string__recursive(encoded_string, expected_decoded_string):
     solver = Solution()
-    result = solver.decodeString__recursive(encoded_sting)
-    assert result == decoded_string
+    decoded_string = solver.decode_string__recursive(encoded_string, IndexPointer())
+    assert decoded_string == expected_decoded_string
+
+
+@pytest.mark.parametrize('encoded_string, expected_decoded_string', decode_string_test_cases)
+def test_decode_string__iterative(encoded_string, expected_decoded_string):
+    solver = Solution()
+    decoded_string = solver.decode_string__iterative(encoded_string, 0)
+    assert decoded_string == expected_decoded_string

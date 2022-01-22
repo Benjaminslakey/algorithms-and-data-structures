@@ -76,26 +76,31 @@ class Solution:
         if len(nums) == 1:
             return 1 if abs(nums[0]) == abs(target) else 0
 
-        memo = {}
+        parents = {}
+
         num_ways = 0
         idx = -1
         current_sum = 0
-        stack = deque([(0, -1)])
+        stack = deque([(0, -1, (0, -1))])
         while stack or idx < len(nums) - 1:
             while idx < len(nums) - 1:
+                # remember parent for memoization
+                parent = (current_sum, idx)
                 # go to left child
                 current_sum += nums[(idx := idx + 1)]
-                stack.append((current_sum, idx))
-            current_sum, idx = stack.pop()
+                stack.append((current_sum, idx, parent))
+            current_sum, idx, parent = stack.pop()
             if idx == len(nums) - 1 and stack:  # this is a leaf node
                 if current_sum == target:
                     num_ways += 1
                 # pop back to lowest leftmost, incomplete subtree root
-                current_sum, idx = stack.pop()
+                current_sum, idx, parent = stack.pop()
             # go to right child
+            parent = (current_sum, idx)
             current_sum -= nums[(idx := idx + 1)]
+            # if right child is a subtree and not a leaf, put it on the stack
             if idx < len(nums) - 1:
-                stack.append((current_sum, idx))
+                stack.append((current_sum, idx, parent))
             if idx == len(nums) - 1 and current_sum == target:
                 num_ways += 1
         return num_ways

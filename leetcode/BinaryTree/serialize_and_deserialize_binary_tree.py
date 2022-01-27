@@ -3,7 +3,7 @@
 from collections import deque
 import json
 
-from data_structures.trees.binary_tree import BinaryTreeNode
+from bts_lib.trees.binary_tree.binary_tree import BinaryTreeNode
 
 
 class Codec:

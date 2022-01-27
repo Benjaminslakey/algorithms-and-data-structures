@@ -1,7 +1,7 @@
 from collections import deque
 from typing import Optional, List, Any
 
-from data_structures.trees.binary_tree import BinaryTreeNode
+from bts_lib.trees.binary_tree.binary_tree import BinaryTreeNode
 
 
 def level_order_traversal(root: Optional[BinaryTreeNode]) -> List[List[int]]:

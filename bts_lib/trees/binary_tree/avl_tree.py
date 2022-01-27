@@ -1,6 +1,6 @@
 from typing import (Optional, NoReturn, Iterable, Protocol)
 
-from data_structures.trees.binary_tree import BinaryTreeNode
+from bts_lib.trees.binary_tree.binary_tree import BinaryTreeNode
 
 BALANCED = 0
 RIGHT_RIGHT = 1

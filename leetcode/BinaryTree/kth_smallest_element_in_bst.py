@@ -1,11 +1,10 @@
 # @tags: [stack, binary_tree]
 # @todo add unit tests
-import pytest
 
 from collections import deque
 from typing import Optional
 
-from data_structures.trees.binary_tree import BinaryTreeNode
+from bts_lib.trees.binary_tree.binary_tree import BinaryTreeNode
 
 
 class Solution:

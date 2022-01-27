@@ -5,8 +5,8 @@ from typing import (Optional, List)
 import pytest
 
 
-from algorithms.trees.binary_tree.deserialize_tree import deserialize_leetcode_tree
-from data_structures.trees.binary_tree import BinaryTreeNode
+from bts_lib.trees.binary_tree.deserialize_tree import deserialize_leetcode_tree
+from bts_lib.trees.binary_tree.binary_tree import BinaryTreeNode
 
 
 class Solution:

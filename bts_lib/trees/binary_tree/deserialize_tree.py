@@ -1,6 +1,6 @@
 # Definition for a binary tree node.
 
-from data_structures.trees.binary_tree import BinaryTreeNode
+from bts_lib.trees.binary_tree.binary_tree import BinaryTreeNode
 
 
 def deserialize_leetcode_tree(tree_arr):

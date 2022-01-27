@@ -1,8 +1,8 @@
 import pytest
 
-from algorithms.trees.binary_tree.traversals import inorder_traversal
-from algorithms.trees.binary_tree.validate import is_balanced
-from data_structures.trees.avl_tree import AVLTree
+from bts_lib.trees.binary_tree.traversals import inorder_traversal
+from bts_lib.trees.binary_tree.validate import is_balanced
+from bts_lib.trees.binary_tree.avl_tree import AVLTree
 
 
 @pytest.mark.parametrize('initial_tree, to_delete, expected_inorder', [

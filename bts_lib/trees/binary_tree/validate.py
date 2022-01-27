@@ -1,6 +1,6 @@
 from typing import Tuple
 
-from data_structures.trees.binary_tree import BinaryTreeNode
+from bts_lib.trees.binary_tree.binary_tree import BinaryTreeNode
 
 
 def is_balanced(tree_root: BinaryTreeNode) -> bool:

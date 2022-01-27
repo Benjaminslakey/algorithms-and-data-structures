@@ -1,7 +1,7 @@
 import pytest
 
-from algorithms.trees.binary_tree.deserialize_tree import deserialize_leetcode_tree
-from algorithms.trees.binary_tree.traversals import level_order_traversal
+from bts_lib.trees.binary_tree.deserialize_tree import deserialize_leetcode_tree
+from bts_lib.trees.binary_tree.traversals import level_order_traversal
 
 
 @pytest.mark.parametrize('input_tree, expected_level_order', [

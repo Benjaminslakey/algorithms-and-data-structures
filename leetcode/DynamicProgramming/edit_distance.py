@@ -8,7 +8,7 @@ class Solution:
     """
     first solution that comes to mind
     breadth first search, word1 is start vertex word2 is target vertex
-    neighbors of each node 
+    neighbors of each node
     """
     def __init__(self):
         self.replace_or_insert = set()
@@ -16,7 +16,8 @@ class Solution:
     def get_neighbors(self, word: str) -> List[str]:
         neighbors = []
         # delete_neighbors
-        for
+        for x in ():
+            pass
         replace_neighbors = []
         insert_neighbors = []
         return neighbors

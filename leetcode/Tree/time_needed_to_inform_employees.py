@@ -13,6 +13,9 @@ from typing import List
 
 
 class Solution:
+    """
+    
+    """
     def numOfMinutes(self, n: int, headID: int, manager: List[int], informTime: List[int]) -> int:
         tree = defaultdict(list)
         for employee, parent in enumerate(manager):

@@ -1,5 +1,4 @@
-import cProfile
-from collections import Counter, defaultdict
+from collections import Counter
 from typing import List
 
 import pytest
@@ -36,16 +35,14 @@ class Solution:
         return max_points_from_state
 
     def bottom_up(self, nums):
-        # @todo not correct still
-        frequency = Counter(nums)
-        numbers = sorted(list(frequency.keys()))
+        frequency = [0] * (10 ** 4 + 1)
+        for num in nums:
+            frequency[num] += num
 
-        dp = [0] * (len(numbers) + 1)
-        dp[1] = numbers[0]
-        for idx in range(2, len(numbers) + 1):
-            num = numbers[idx - 1]
-            take = num * frequency[num]
-            dp[idx] = max(dp[idx - 2] + take, dp[idx - 1])
+        dp = [0] * (len(frequency))
+        dp[1] = frequency[1]
+        for num in range(2, len(dp)):
+            dp[num] = max(dp[num - 2] + frequency[num], dp[num - 1])
         return dp[-1]
 
 

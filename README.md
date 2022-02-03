@@ -6,7 +6,7 @@ python library containing general algorithms and implementations of non std libr
 #### Data Structures
 - Disjoint Set
 - AVL Tree
-##### Types
+##### Structural Types
 - Graph
     - Graph
     - Vertex

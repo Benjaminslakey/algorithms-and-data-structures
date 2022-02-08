@@ -18,13 +18,11 @@ class Solution:
         pre_reqs = defaultdict(set)
         children = defaultdict(set)
         # parse dag into parents and children, with relationships between both
-        # reversing direction of edges for children
         for pre_req, course in relations:
             pre_reqs[course].add(pre_req)
             children[pre_req].add(course)
         no_prereq_courses = []
-        # any course that has pre_reqs should be in our adj list
-        # if it's not then it is a starting course
+        # any course that has pre_reqs should be in our adj list, if it's not then it is a starting course
         # if every course has pre_reqs than we have a cycle in our graph
         for course in range(1, n + 1):
             if not pre_reqs.get(course):
@@ -39,13 +37,11 @@ class Solution:
             max_semester = max(max_semester, semester)
             courses_taken.add(course)
             for child in children[course]:
-                # before selecting a course to take next semester
-                # check that we have taken all pre_requisite courses
+                # before selecting a course to take next semester check that we have taken all pre_requisite courses
                 if all([prq in courses_taken for prq in pre_reqs[child]]):
                     queue.append((child, semester + 1))
-        # if we didn't take every course, whicih would happen if there was a
-        # circular dep between courses / cycle in dag preventing us from signing
-        # up for a class in the next semester
+        # if we didn't take every course, then we encountered a circular dep between courses / cycle in the dag
+        # preventing us from signing up for a class in the next semester
         if len(courses_taken) != n:
             return -1
         return max_semester

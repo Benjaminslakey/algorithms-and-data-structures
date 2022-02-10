@@ -5,7 +5,10 @@ from bts_lib.trees.binary_tree.binary_tree import BinaryTreeNode
 
 
 def _level_order(root: BinaryTreeNode) -> Iterable[Iterable[Any]]:
-    """ include nulls in level order and add fake children for null nodes to make printing easier for now """
+    """
+    converts any tree to complete tree by filling missing nodes with nulls
+    include nulls in level order and add fake children for null nodes to make printing easier for now
+    """
     q = deque([root])
     traversal = []
     while q:
@@ -30,6 +33,9 @@ def _level_order(root: BinaryTreeNode) -> Iterable[Iterable[Any]]:
 
 def print_tree(root: BinaryTreeNode) -> NoReturn:
     """
+    only works on complete trees currently
+    need to update so that we can use the index of a node from, complete version of, the tree + depth of node
+    to print with correct spacing while being able to not output the null nodes & links
     inorder: [11, 20, 23, 26, 29, 50, 65]
     outputs ->
                       ----------------- 29  -----------------

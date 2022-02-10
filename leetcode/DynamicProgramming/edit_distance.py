@@ -6,35 +6,26 @@ import pytest
 
 class Solution:
     """
-    first solution that comes to mind
-    breadth first search, word1 is start vertex word2 is target vertex
-    neighbors of each node
+    subproblem:
+        f(word1[i:], word2[j:]) => suffixes
+    recurrence relation:
+        f(word1[i + 1])
+    topological order:
+    base cases:
+        if
+    original:
+    time complexity:
     """
-    def __init__(self):
-        self.replace_or_insert = set()
-
-    def get_neighbors(self, word: str) -> List[str]:
-        neighbors = []
-        # delete_neighbors
-        for x in ():
-            pass
-        replace_neighbors = []
-        insert_neighbors = []
-        return neighbors
-
 
     def minDistance(self, word1: str, word2: str) -> int:
-        self.replace_or_insert = set(list(word2))
-        queue = deque([(word1, 0)])
-        visited = set()
-        while queue:
-            current, distance = queue.popleft()
-            if current == word2:
-                return distance
-            for neighbor in self.get_neighbors(current):
-                queue.append((neighbor, distance + 1))
-            visited.add(current)
-        return 0
+        pass
+
+    def top_down_dp(self, word1, word2, i, j):
+
+
+
+    def bottom_up_dp(self):
+        pass
 
 
 @pytest.mark.parametrize('word1, word2, expected_distance', [

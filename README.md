@@ -47,7 +47,7 @@ Solutions to various Leetcode problems I've completed while practicing algorithm
   - Minimum Edit Distance
   - Minimax
 - Graph
-  - Find Euclidean Path
+  - Find Eulerian Path
   - is a Graph BiPartite?
   - is a Graph Connected?
   - Path Enumeration between two Vertices 

@@ -1,7 +1,8 @@
 from collections import deque
-from typing import Optional, List, Any
+from typing import Optional, List
 
 from bts_lib.trees.binary_tree.binary_tree import BinaryTreeNode
+from trees.binary_tree import PREORDER, INORDER, POSTORDER
 
 
 def level_order_traversal(root: Optional[BinaryTreeNode]) -> List[List[int]]:
@@ -26,26 +27,14 @@ def level_order_traversal(root: Optional[BinaryTreeNode]) -> List[List[int]]:
     return levels
 
 
-def preorder_traversal(root: BinaryTreeNode) -> List[Any]:
+def depth_first_traversal(root: BinaryTreeNode, process: callable, process_order: int = INORDER) -> None:
     if root is None:
-        return []
-    left = preorder_traversal(root.left)
-    right = preorder_traversal(root.right)
-    return [root.val] * root.count + left + right
-
-
-def inorder_traversal(root: BinaryTreeNode) -> List[Any]:
-    if root is None:
-        return []
-    left = inorder_traversal(root.left)
-    right = inorder_traversal(root.right)
-    return left + [root.val] * root.count + right
-
-
-def postorder_traversal(root: BinaryTreeNode) -> List[Any]:
-    if root is None:
-        return []
-    left = postorder_traversal(root.left)
-    right = postorder_traversal(root.right)
-    return left + right + [root.val] * root.count
-
+        return
+    if process_order == PREORDER:
+        process(root)
+    depth_first_traversal(root.left, process)
+    if process_order == INORDER:
+        process(root)
+    depth_first_traversal(root.right, process)
+    if process_order == POSTORDER:
+        process(root)

@@ -1,4 +1,5 @@
 from collections import deque
+from typing import List
 
 WALL = -1
 GATE = 0

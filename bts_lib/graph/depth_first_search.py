@@ -20,5 +20,4 @@ def depth_first_search(graph: Graph, parents: Dict[Vertex, Vertex], start_vertex
             if parent_of_adjacent_vertex is None:
                 parents[adjacent_vertex] = vertex
                 depth_first_search(graph, parents, adjacent_vertex)
-
     return dfs(start_vertex)

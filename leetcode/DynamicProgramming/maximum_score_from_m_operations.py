@@ -61,18 +61,23 @@ class Solution:
         self.memo[key] = best_choice
         return best_choice
 
-    def bottom_up_dp(self, nums, multipliers):
-        """ not correct """
-        dp = [[0] * (len(multipliers) + 1) for _ in range(len(multipliers) + 1)]
-        dp[0] = multipliers[0] * nums[0]
-        dp[1] = multipliers[0] * nums[-1]
-        l, r = 0, len(nums) - 1
-        for idx in range(2, len(dp)):
-            dp[idx] = max(
-                dp[idx - 1] + nums[r - idx + 1] * multipliers[idx - 1],
-                dp[idx - 2] + nums[l + idx - 1] * multipliers[idx - 1]
-            )
-        return dp[0][0]
+    def bottom_up_dp(self, nums, mult):
+        """ important note
+        we iterate backwards in our DP because our base case is: 1 element remaining in multipliers, which happens when
+        mult_idx == m - 1
+        """
+        n, m = len(nums), len(mult)
+        dp = [[0] * (m + 1) for _ in range(m + 1)]
+        for mult_idx in range(m - 1, -1, -1):
+            for left in range(mult_idx, -1, -1):
+                right = -1 * (mult_idx + left - n)
+                dp[mult_idx][left] = max(
+                    dp[mult_idx + 1][left] + nums[right] * mult[mult_idx],
+                    dp[mult_idx + 1][left - 1] + nums[left] * mult[mult_idx]
+                )
+        for row in dp:
+            print(row)
+        return dp[-1][-1]
 
 
 @pytest.mark.parametrize('nums, multipliers, expected_best_score', [

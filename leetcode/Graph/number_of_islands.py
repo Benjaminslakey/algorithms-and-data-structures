@@ -2,6 +2,7 @@
 # @tags: [graph, breadth_first_search, queue]
 
 from collections import deque
+from typing import List
 
 WATER = "0"
 LAND = "1"

@@ -21,36 +21,33 @@ class Solution:
 
     def threeSum(self, nums: List[int]) -> List[List[int]]:
         triplets = []
-        complements = defaultdict(list)
+        complements = defaultdict(set)
         seen = set()
         for idx, n in enumerate(nums):
-            complements[n].append(idx)
+            complements[n].add(idx)
 
         for i in range(0, len(nums)):
             num1 = nums[i]
-            for j in range(0, len(nums)):
-                if i == j:
-                    continue
-                if tuple(sorted([i, j])) in seen:
-                    continue
+            for j in range(i + 1, len(nums)):
                 num2 = nums[j]
-                complement = (num1 + num2) * -1
-                complement_idxs = complements.get(complement, [])
-                if not complement_idxs:
+                pair = tuple(sorted([num1, num2]))
+                if pair in seen:
                     continue
-                triplet = sorted([num1, num2, complement])
-                for c_idx in complement_idxs:
-                    if c_idx != i and c_idx != j:
-                        triplets.append(triplet)
-                        break
+                else:
+                    seen.add(pair)
+                complement = (num1 + num2) * -1
+                complement_idxs = complements.get(complement, set())
+                if complement_idxs and complement_idxs - {i, j}:
+                    triplets.append(sorted([num1, num2, complement]))
+                    seen.add(tuple(sorted([num1, complement])))
+                    seen.add(tuple(sorted([num2, complement])))
         return triplets
 
 
 @pytest.mark.parametrize('nums, expected_triplets', [
-    pytest.param()
+    pytest.param([-1, 0, 1, 2, -1, -4], [[-1, -1, 2], [-1, 0, 1]])
 ])
 def test_3sum(nums, expected_triplets):
     solver = Solution()
     result = solver.threeSum(nums)
-    assert result == expected_triplets
-
+    assert sorted(result) == sorted(expected_triplets)

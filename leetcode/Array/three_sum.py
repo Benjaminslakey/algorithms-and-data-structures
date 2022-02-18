@@ -20,6 +20,13 @@ class Solution:
     """
 
     def threeSum(self, nums: List[int]) -> List[List[int]]:
+        pass
+
+    def three_sum__two_pointers(self, nums: List[int]) -> List[List[int]]:
+        pass
+
+
+    def three_sum__no_sort(self, nums: List[int]) -> List[List[int]]:
         triplets = []
         complements = defaultdict(set)
         seen = set()

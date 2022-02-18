@@ -6,6 +6,8 @@ python library containing general algorithms and implementations of non std libr
 #### Data Structures
 - Disjoint Set
 - AVL Tree
+- Trie
+- Heap
 ##### Structural Types
 - Graph
     - Graph
@@ -45,6 +47,7 @@ Solutions to various Leetcode problems I've completed while practicing algorithm
 - DynamicProgramming
   - Longest Common Subsequence
   - Minimum Edit Distance
+- Game Theory
   - Minimax
 - Graph
   - Find Eulerian Path
@@ -60,3 +63,5 @@ Solutions to various Leetcode problems I've completed while practicing algorithm
   - RPN Calculator
 - Queue
 - String
+- Heap
+  - Merge K Sorted Lists

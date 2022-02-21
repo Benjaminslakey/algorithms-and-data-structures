@@ -1,7 +1,7 @@
 from collections import deque
 from typing import Optional, List
 
-from bts_lib.trees.binary_tree.binary_tree import BinaryTreeNode
+from yekals.trees.binary_tree.binary_tree import BinaryTreeNode
 from trees.binary_tree import PREORDER, INORDER, POSTORDER
 
 

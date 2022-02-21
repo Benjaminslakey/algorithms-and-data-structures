@@ -1,7 +1,7 @@
 from collections import deque
 from typing import NoReturn, Iterable, Any
 
-from bts_lib.trees.binary_tree.binary_tree import BinaryTreeNode
+from yekals.trees.binary_tree.binary_tree import BinaryTreeNode
 
 
 def _level_order(root: BinaryTreeNode) -> Iterable[Iterable[Any]]:

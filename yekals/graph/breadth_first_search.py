@@ -1,7 +1,7 @@
 from collections import deque
 from typing import Optional
 
-from bts_lib.graph.graph import Graph
+from yekals.graph.graph import Graph
 
 
 def bread_first_search(

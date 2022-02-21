@@ -2,7 +2,7 @@ from typing import List
 
 import pytest
 
-from bts_lib.disjoint_set import DisjointSet
+from yekals.disjoint_set import DisjointSet
 
 
 class Solution:

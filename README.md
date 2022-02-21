@@ -1,7 +1,7 @@
 # Algorithms & Data Structures
 
 -----
-## bts_lib
+## yekals
 python library containing general algorithms and implementations of non std library data structures
 #### Data Structures
 - Disjoint Set
@@ -14,6 +14,14 @@ python library containing general algorithms and implementations of non std libr
     - Vertex
     - Edge
 #### Algorithms
+- Sorting
+  - MergeSort
+  - QuickSort
+    - randomized pivot  @todo
+    - deterministic pivot  @todo
+- Searching
+  - Binary Search
+  - Median / Rank Finding  @todo
 - Binary Tree
     - print Binary Tree
     - serialize Binary Tree
@@ -24,7 +32,7 @@ python library containing general algorithms and implementations of non std libr
 - Graph
     - Breadth First Search
     - Depth First Search
-      - Edge Classification
+      - Edge Classification  @todo
     
 
 ## Leetcode Solutions

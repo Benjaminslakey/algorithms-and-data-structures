@@ -1,6 +1,6 @@
 from typing import (Optional, NoReturn, Iterable, Protocol)
 
-from bts_lib.trees.binary_tree.binary_tree import BinaryTreeNode
+from yekals.trees.binary_tree.binary_tree import BinaryTreeNode
 
 BALANCED = 0
 RIGHT_RIGHT = 1

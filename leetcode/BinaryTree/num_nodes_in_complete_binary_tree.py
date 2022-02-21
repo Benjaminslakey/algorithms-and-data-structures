@@ -2,8 +2,8 @@ from typing import Optional
 
 import pytest
 
-from bts_lib.trees.binary_tree.binary_tree import BinaryTreeNode
-from bts_lib.trees.binary_tree.deserialize_tree import deserialize_leetcode_tree
+from yekals.trees.binary_tree.binary_tree import BinaryTreeNode
+from yekals.trees.binary_tree.deserialize_tree import deserialize_leetcode_tree
 
 
 class Solution:

@@ -74,3 +74,6 @@ def test_is_number(s, expected):
     solver = Solution()
     result = solver.isNumber(s)
     assert result == expected
+
+# @todo unsolved
+# tags: ['unsolved']

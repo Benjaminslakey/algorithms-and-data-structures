@@ -2,7 +2,7 @@ from typing import List
 
 import pytest
 
-from bts_lib.trees.binary_tree.avl_tree import AVLTree
+from yekals.trees.binary_tree.avl_tree import AVLTree
 
 
 def create_avl(nums: List[int], start: int, end: int) -> AVLTree:

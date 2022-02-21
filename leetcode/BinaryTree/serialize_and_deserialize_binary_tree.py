@@ -3,7 +3,7 @@
 from collections import deque
 import json
 
-from bts_lib.trees.binary_tree.binary_tree import BinaryTreeNode
+from yekals.trees.binary_tree.binary_tree import BinaryTreeNode
 
 
 class Codec:

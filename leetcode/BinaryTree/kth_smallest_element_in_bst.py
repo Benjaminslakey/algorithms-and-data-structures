@@ -4,7 +4,7 @@
 from collections import deque
 from typing import Optional
 
-from bts_lib.trees.binary_tree.binary_tree import BinaryTreeNode
+from yekals.trees.binary_tree.binary_tree import BinaryTreeNode
 
 
 class Solution:

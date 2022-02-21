@@ -5,8 +5,8 @@ from typing import List
 
 import pytest
 
-from bts_lib.trees.binary_tree.print_tree import print_tree
-from bts_lib.trees.binary_tree.binary_tree import BinaryTreeNode
+from yekals.trees.binary_tree.print_tree import print_tree
+from yekals.trees.binary_tree.binary_tree import BinaryTreeNode
 
 
 class Solution:

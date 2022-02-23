@@ -58,7 +58,7 @@ class Solution:
         time per subproblem:
             linear O(n), because we check the LIS of every element in sequence that comes after I
             # of subproblems, N because we check if the LIS starts at every index
-        overall: n (time per subproblem) * n (number of problems) => O(n^2)
+        overall: n (time per subproblem) * n (Math of problems) => O(n^2)
     """
     def __init__(self):
         self.memo = {}

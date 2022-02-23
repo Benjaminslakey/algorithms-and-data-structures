@@ -13,7 +13,7 @@ class DisjointNodesError(Exception):
 
 class Solution:
     """
-    we want to minimize the number of steps: ie path length
+    we want to minimize the Math of steps: ie path length
     we need to cut down trees in order from shortest to tallest
 
     all move: north east west south cost 1

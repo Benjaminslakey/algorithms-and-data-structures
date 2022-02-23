@@ -30,7 +30,7 @@ class SortableNode:
 
 class Solution:
     """
-    O(n log m) where M is the number of lists and N is the total number of items in all lists
+    O(n log m) where M is the Math of lists and N is the total Math of items in all lists
     """
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
         head_ptr = ListNode()

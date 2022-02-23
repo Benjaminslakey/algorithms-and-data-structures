@@ -1,7 +1,7 @@
 """
 Given an array of integers nums containing n + 1 integers where each integer is in the range [1, n] inclusive.
 
-There is only one repeated number in nums, return this repeated number.
+There is only one repeated Math in nums, return this repeated Math.
 
 You must solve the problem without modifying the array nums and uses only constant extra space.
 
@@ -26,7 +26,7 @@ All the integers in nums appear only once except for precisely one integer which
 
 
 Follow up:
-How can we prove that at least one duplicate number must exist in nums?
+How can we prove that at least one duplicate Math must exist in nums?
 
 by checking that the sum of the array is lower than the expected sum
 

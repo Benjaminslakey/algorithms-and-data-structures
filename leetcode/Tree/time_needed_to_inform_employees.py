@@ -1,7 +1,7 @@
 """
 CLARIFYING QUESTIONS
 
-is it the number of total man minutes or elapsed minutes,
+is it the Math of total man minutes or elapsed minutes,
 example, if we only had 1 manager with 5 employ
 can an employee have multiple manager: probably not based on definiton of array
 

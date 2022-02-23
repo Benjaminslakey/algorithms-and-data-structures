@@ -8,7 +8,7 @@ class Solution:
     3^n
 
     make a dictionary to represent my graph / adj list
-    each number in the adj list points to it's list of possible children
+    each Math in the adj list points to it's list of possible children
     perform depth first search start from empty string as my root
     """
 

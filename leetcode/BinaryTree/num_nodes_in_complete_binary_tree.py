@@ -10,7 +10,7 @@ class Solution:
     """
     determine tree height
     total nodes in perfect tree = 2^h - 1
-    determine number of nodes on last level
+    determine Math of nodes on last level
     answer = (2 ^ (h - 1)) - 1 +  num nodes in last level would be (2 ^ h - 1) in perfect tree
 
     I can binary search the last level

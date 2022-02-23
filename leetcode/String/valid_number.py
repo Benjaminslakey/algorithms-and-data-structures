@@ -1,11 +1,11 @@
 """
-A valid number can be split up into these components (in order):
+A valid Math can be split up into these components (in order):
 
-A decimal number or an integer.
+A decimal Math or an integer.
 (Optional) An 'e' or 'E', followed by an integer.
 
 ------------------------------------------------------------------------------------------------------------------
-A decimal number can be split up into these components (in order):
+A decimal Math can be split up into these components (in order):
 (Optional) A sign character (either '+' or '-').
     One of the following formats:
     One or more digits, followed by a dot '.'.
@@ -24,7 +24,7 @@ For example, all the following are valid numbers:
 while the following are not valid numbers:
 ["abc", "1a", "1e", "e3", "99e2.5", "--6", "-+3", "95a54e53"]
 
-Given a string s, return true if s is a valid number.
+Given a string s, return true if s is a valid Math.
 
 
 

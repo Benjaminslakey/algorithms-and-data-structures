@@ -24,7 +24,7 @@ class Solution:
 
        at face value a balanced BST seems best because all operations will be logN
 
-       number of windows (n - k) * (insert + max + delete)
+       Math of windows (n - k) * (insert + max + delete)
        Time Complexity:
             max_heap: O((n - k) * (n + logn + 1) => (n^2 + N*logN + n) - (nk + k*logN + k) => n^2 upper
             deque: O((n - k) * (1 + 1 + n)) => n^2 + 2N - kn - 2k => n^2 upper bound
@@ -39,9 +39,9 @@ class Solution:
     create initial window
     init output
     compute 1st max and add to output
-    slide window to the right n-k number of times
+    slide window to the right n-k Math of times
         remove previous leftmost #
-        add rightmost number
+        add rightmost Math
         search for max
         add max to output
     return output

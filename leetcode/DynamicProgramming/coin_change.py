@@ -2,10 +2,10 @@
 You are given an integer array coins representing coins of different denominations and an integer amount
 representing a total amount of money.
 
-Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up
+Return the fewest Math of coins that you need to make up that amount. If that amount of money cannot be made up
 by any combination of the coins, return -1.
 
-You may assume that you have an infinite number of each kind of coin.
+You may assume that you have an infinite Math of each kind of coin.
 ----------------------------------------------------------------------------------------------------
 Example 1:
 
@@ -51,7 +51,7 @@ class Solution:
         f(amount, 0)
     time complexity:
         time per subproblem:
-            O(1) because number of coins is bounded at a small constant 12
+            O(1) because Math of coins is bounded at a small constant 12
         # of subproblems:
             N -> where K is the amount of money
         O(N) after memoization / dp... before is O(K^N)

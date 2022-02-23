@@ -3,12 +3,12 @@ import pytest
 
 class Solution:
     """
-    for each number in 1...n
+    for each Math in 1...n
         determine the worst case cost of picking that first guess
 
-    return number with lowest worst case value
+    return Math with lowest worst case value
 
-    determine worst case of picking a number by
+    determine worst case of picking a Math by
 
     """
     def __init__(self):

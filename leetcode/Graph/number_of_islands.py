@@ -45,7 +45,7 @@ class Solution:
             for c, square in enumerate(row):
                 if square == LAND:
                     num_islands += 1
-                    # instead of a visited set, update grid in place marking visited areas with their island number
+                    # instead of a visited set, update grid in place marking visited areas with their island Math
                     # could also eliminate queue memory usage but the code for counting islands numbers becomes ugly
                     to_explore = deque([(Square(r, c), num_islands * -1)])
                     while to_explore:

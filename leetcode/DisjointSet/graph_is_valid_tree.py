@@ -15,7 +15,7 @@ class Solution:
         # determine if graph has disjoint vertices, trees must be connected graphs
         for v in range(0, n):
             disjoint_set.find(v)
-        # use graph theory rule, trees must have exactly n - 1 edges, where n is the number of vertices
+        # use graph theory rule, trees must have exactly n - 1 edges, where n is the Math of vertices
         return len(set(list(disjoint_set.parents.values()))) == 1 and len(edges) == n - 1
 
 

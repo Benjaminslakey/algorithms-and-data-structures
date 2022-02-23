@@ -19,16 +19,18 @@ def get_left(digits, idx):
 def next_greatest_number(number):
     digits: List[str] = list(str(number))
     right: int = len(digits) - 1
+    # find first non-increasing digit from right -> left
     while get_left(digits, right) >= digits[right] and -1 < right:
         right -= 1
     if right <= 0:
         return number
     first_descending, right = right - 1, len(digits) - 1
+    # find rightmost digit larger than digit at first_descending index
     while digits[right] <= digits[first_descending] and first_descending + 1 < right:
         right -= 1
-    # swap digits
     digits[first_descending], digits[right] = digits[right], digits[first_descending]
-    # reverse the rest
+    # reverse the rest to create the smallest digit string possible to the right of our
+    # now larger digit
     reverse_digits(digits, first_descending + 1, len(digits) - 1)
     return int("".join(digits))
 

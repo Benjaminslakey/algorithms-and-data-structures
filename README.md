@@ -73,3 +73,5 @@ Solutions to various Leetcode problems I've completed while practicing algorithm
 - String
 - Heap
   - Merge K Sorted Lists
+- BackTracking
+  - N Queens

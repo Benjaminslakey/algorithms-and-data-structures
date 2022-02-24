@@ -50,12 +50,14 @@ class Solution:
                     locations.append((r, c))
         return tuple(sorted(locations))
 
-    def place_queen(self, chessboard, queen_location):
+    def place_queen(self, chessboard, queen_locations, queen_location):
         qr, qc = queen_location
+        queen_locations.append(queen_location)
         chessboard[qr][qc] = self.QUEEN_MARKER
 
-    def remove_queen(self, chessboard, queen_location):
+    def remove_queen(self, chessboard, queen_locations, queen_location):
         qr, qc = queen_location
+        queen_locations.pop()
         chessboard[qr][qc] = self.EMPTY_MARKER
 
     def record_solution(self, chessboard):
@@ -69,14 +71,14 @@ class Solution:
         """
         candidates = []
         n = len(chessboard)
+        rows = [self.SAFE_MARKER for _ in range(n)]
+        cols = [self.SAFE_MARKER for _ in range(n)]
         attack_board = [[self.SAFE_MARKER for _ in range(n)] for _ in range(n)]
         queen_locations = self.get_queen_locations(chessboard)
         for qr, qc in queen_locations:
-            for r in range(n):
-                attack_board[r][qc] = self.THREAT_MARKER
-            for c in range(n):
-                attack_board[qr][c] = self.THREAT_MARKER
-            # 0, 0
+            rows[qr] = self.THREAT_MARKER
+            cols[qc] = self.THREAT_MARKER
+            # determine unsafe squares along the diagonals
             for delta in range(1, n + 1):
                 for dr, dc in [(1, 1), (1, -1), (-1, 1), (-1, -1)]:
                     delta_row, delta_col = dr * delta, dc * delta
@@ -84,13 +86,14 @@ class Solution:
                         attack_board[qr + delta_row][qc + delta_col] = self.THREAT_MARKER
 
         for row in range(n):
+            if rows[row] == self.THREAT_MARKER:
+                continue
             for column in range(n):
-                if attack_board[row][column] == self.SAFE_MARKER:
+                if [attack_board[row][column], cols[column]] == [self.SAFE_MARKER] * 2:
                     candidates.append((row, column))
         return candidates
 
-    def solve(self, board, num_queens):
-        queens = self.get_queen_locations(board)
+    def solve(self, board, queens, num_queens):
         if num_queens == 0 and queens not in self.discovered:
             self.record_solution(board)
             self.discovered.add(queens)
@@ -101,9 +104,9 @@ class Solution:
 
         for candidate in self.get_candidates(board):
             # need to prune duplicate solutions
-            self.place_queen(board, candidate)
-            self.solve(board, num_queens - 1)
-            self.remove_queen(board, candidate)
+            self.place_queen(board, queens, candidate)
+            self.solve(board, queens, num_queens - 1)
+            self.remove_queen(board, queens, candidate)
 
     def resolve_solutions(self):
         resolved = []
@@ -114,7 +117,7 @@ class Solution:
 
     def solveNQueens(self, n: int) -> List[List[str]]:
         board = [[self.EMPTY_MARKER for _ in range(n)] for _ in range(n)]
-        self.solve(board, n)
+        self.solve(board, [], n)
         return self.resolve_solutions()
 
 

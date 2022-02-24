@@ -33,12 +33,28 @@ import pytest
 
 
 class Solution:
+    """
+    record last seen location of each character, if we see a repeated character
+    skip foward past the last occurrence of it
+    record maximum achieved length
+    "pwwkew"
+    "abcabcbb"
+    """
     def lengthOfLongestSubstring(self, s: str) -> int:
-        character_indices = defaultdict(list)
-        for idx, char in enumerate(s):
-            character_indices[char].append(idx)
-
-
+        longest = 0
+        last_position = {}
+        l, r = 0, 0
+        while r < len(s):
+            if s[r] not in last_position:
+                longest = max(longest, r - l + 1)
+                last_position[s[r]] = r
+                r += 1
+            else:
+                next_l = last_position[s[r]] + 1
+                for i in range(l, next_l):
+                    del last_position[s[i]]
+                l = next_l
+        return longest
 
 
 @pytest.mark.parametrize('s, expected', [

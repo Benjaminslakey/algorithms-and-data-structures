@@ -17,7 +17,7 @@ python library containing general algorithms and implementations of non std libr
 - Sorting
   - MergeSort
   - QuickSort
-    - randomized pivot  @todo
+    - randomized pivot
     - deterministic pivot  @todo
 - Searching
   - Binary Search
@@ -72,6 +72,7 @@ Solutions to various Leetcode problems I've completed while practicing algorithm
 - Queue
 - String
 - Heap
+  - median element in data stream 
   - Merge K Sorted Lists
 - BackTracking
   - N Queens

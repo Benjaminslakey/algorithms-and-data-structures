@@ -1,16 +1,17 @@
 from collections import deque
 from typing import Optional
 
-from yekals.graph.graph import Graph
+from graph.graph import Graph, Vertex
 
 
 def bread_first_search(
         graph: Graph,
+        source: Vertex,
         process_vertex: Optional[callable],
         process_edge: Optional[callable]
 ):
     visited = set()
-    queue = deque([])
+    queue = deque([source])
     while queue:
         current_vertex = queue.popleft()
         if process_vertex:

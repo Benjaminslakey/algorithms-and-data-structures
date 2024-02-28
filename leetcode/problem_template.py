@@ -1,3 +1,5 @@
+import pytest
+
 """
 Problem Statement
 
@@ -10,9 +12,14 @@ Examples
 ------------------------------------------------------------------------------------------------------------------------
 """
 
-import pytest
 
 # Solution class goes here
+class Solution:
+    def solve(self, input_args):
+        return self.actualFunctionGoesHere(*input_args)
+
+    def actualFunctionGoesHere(self):
+        return
 
 
 # Tests

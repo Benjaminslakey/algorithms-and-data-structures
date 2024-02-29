@@ -29,5 +29,5 @@ class Solution:
 ])
 def test_solution(input_args, expected_output):
     solver = Solution()
-    result = solver.solve(*input_args)
+    result = solver.solve(input_args)
     assert result == expected_output

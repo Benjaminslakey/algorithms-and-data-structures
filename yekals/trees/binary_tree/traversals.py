@@ -37,12 +37,14 @@ def level_order_traversal(root: Optional[BinaryTreeNode], process: callable):
             queue.appendleft(node.right)
 
 
-def capture_flat_level_order(capture_arr):
+def capture_flat_level_order(capture_arr, get_nodes=False):
     def wrapped(node):
         if node == LEVEL_MARKER:
             return
         if node is None:
             capture_arr.append(None)
+        elif get_nodes:
+            capture_arr.append(node)
         else:
             capture_arr.append(node.val)
 

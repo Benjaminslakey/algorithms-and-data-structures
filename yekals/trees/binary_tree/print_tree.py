@@ -1,5 +1,5 @@
 from collections import deque
-from typing import NoReturn, Iterable, Any
+from typing import NoReturn, Iterable, Any, Optional
 
 from yekals.trees.binary_tree.binary_tree import BinaryTreeNode
 
@@ -31,7 +31,7 @@ def _level_order(root: BinaryTreeNode) -> Iterable[Iterable[Any]]:
     return traversal
 
 
-def print_tree(root: BinaryTreeNode) -> NoReturn:
+def print_tree(root: Optional[BinaryTreeNode]) -> NoReturn:
     """
     only works on complete trees currently
     need to update so that we can use the index of a node from, complete version of, the tree + depth of node
@@ -55,8 +55,9 @@ def print_tree(root: BinaryTreeNode) -> NoReturn:
     def get_max_node_size(lvl_order):
         max_node = ''
         for lvl in lvl_order:
-            lvl_max = max(lvl, key=lambda x: len(str(x)))
-            max_node = max(max_node, lvl_max, key=lambda x: len(str(x)))
+            lvl = [str(n) for n in lvl]
+            lvl_max = max(lvl, key=lambda x: len(x))
+            max_node = max(max_node, lvl_max, key=lambda x: len(x))
         return len(max_node)
 
     traversal = _level_order(root)

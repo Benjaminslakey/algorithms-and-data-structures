@@ -44,26 +44,28 @@ class Solution:
         return self.pathSum(*input_args)
 
     def pathSum(self, root, targetSum):
-        def helper(node, )
+        return self.doesntwork(root, targetSum)
 
     def doesntwork(self, root, targetSum):
         print_tree(root)
         if root is None:
             return 0
 
-        def helper(node, prev_sum):
+        def helper(node, path_sum, prev_val):
             if node is None:
                 return 0
-            count_at_node = 1 if prev_sum + node.val == targetSum else 0
-            print(f"prev_sum: {prev_sum}, node.val: {node.val}")
-            print_tree(node)
-            l1_count = helper(node.left, node.val)
-            l2_count = helper(node.left, prev_sum + node.val)
-            r1_count = helper(node.right, node.val)
-            r2_count = helper(node.right, prev_sum + node.val)
-            return max(l1_count, l2_count) + max(r1_count, r2_count) + count_at_node
-        return helper(root, 0)
-
+            count_at_node = 0
+            if path_sum + node.val == targetSum:
+                count_at_node += 1
+            if prev_val + node.val == targetSum:
+                count_at_node += 1
+            l_count = helper(node.left, path_sum + node.val, node.val)
+            r_count = helper(node.right, path_sum + node.val, node.val)
+            if node.left or node.right:
+                print(f"paths using node: l_count: {l_count}, r_count: {r_count}, count_at_node: {count_at_node}")
+                print_tree(node)
+            return l_count + r_count + count_at_node
+        return helper(root, 0, 0)
 
 # Tests
 @pytest.mark.parametrize('input_args, expected_output', [

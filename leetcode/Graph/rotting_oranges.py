@@ -102,4 +102,50 @@ class Solution:
             rotten_oranges |= rotted_this_minute  # set union
         return minutes
 
+# more recent solution
+LEFT = (-1, 0)
+RIGHT = (1, 0)
+UP = (0, 1)
+DOWN = (0, -1)
+
+DIRECTIONS = [LEFT, RIGHT, UP, DOWN]
+
+def get_neighbors(grid, current):
+    neighbors = []
+    cx, cy = current
+    for (dx, dy) in DIRECTIONS:
+        nx, ny = cx + dx, cy + dy
+        if 0 <= nx < len(grid[0]) and 0 <= ny < len(grid) and (grid[ny][nx] == 1 or grid[ny][nx] < 0):
+            neighbors.append((nx, ny))
+    return neighbors
+
+def dfs(grid, node, minute):
+    nx, ny = node
+    val = grid[ny][nx]
+    # we've already visited this node in a previous dfs and we reached it more quickly from a different rotten orange
+    # any further work we do from this node would be wasted
+    if (val < 0 and abs(val) < minute):
+        return
+    if val == 1 or val < 0:
+        grid[ny][nx] = -1 * minute
+    for n in get_neighbors(grid, node):
+        dfs(grid, n, minute + 1)
+
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        for y, row in enumerate(grid):
+            for x, square in enumerate(row):
+                if square != 2:
+                    continue
+                dfs(grid, (x, y), 0)
+
+        time_to_rot = 0
+        for row in grid:
+            for sq in row:
+                if sq < 0:
+                    time_to_rot = max(time_to_rot, abs(sq))
+                if sq == 1:
+                    return -1
+        return time_to_rot
+
 # @todo add unit tests
